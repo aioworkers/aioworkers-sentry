@@ -15,10 +15,12 @@ Install dev requirements:
 
 
 .. code-block:: shell
+
     pipenv install --dev --skip-lock
 
 
 Run tests:
 
 .. code-block:: shell
+
     pytest
