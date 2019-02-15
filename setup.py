@@ -8,6 +8,8 @@ version = __import__('aioworkers_sentry').__version__
 
 requirements = [
     'aioworkers>=0.12.0',
+    'raven',
+    'raven-aiohttp',
 ]
 
 test_requirements = [
@@ -24,19 +26,18 @@ readme = pathlib.Path('README.rst').read_text()
 setup(
     name='aioworkers-sentry',
     version=version,
-    description='Sentry plugin for aioworkers',
+    description='aioworkers plugin for Sentry ',
     long_description=readme,
     author='Alexander Bogushov',
-    author_email=' abogushov@gmail.com',
+    author_email='abogushov@gmail.com',
     url='https://github.com/aioworkers/aioworkers-sentry',
     packages=[
-        i for i in find_packages()
-        if i.startswith('aioworkers_sentry')
+        i for i in find_packages() if i.startswith('aioworkers_sentry')
     ],
     include_package_data=True,
     install_requires=requirements,
     license='Apache Software License 2.0',
-    keywords='aioworkers',
+    keywords='aioworkers sentry',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
