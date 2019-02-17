@@ -21,6 +21,11 @@ class Sentry(AbstractEntity):
             self.client,
             **config.get('handler', {})
         )
+        self.context.on_stop.append(self.on_stop)
+
+    async def on_stop(self):
+        # Stop transport on context stop
+        await self.client.remote.get_transport().close()
 
     async def init(self):
         setup_logging(self.handler)
