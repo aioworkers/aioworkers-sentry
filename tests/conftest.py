@@ -2,7 +2,6 @@ import asyncio
 import logging
 
 import pytest
-from aiohttp.test_utils import make_mocked_coro
 
 
 @pytest.fixture
@@ -42,6 +41,7 @@ def wait_for_call(loop):
 
 @pytest.fixture
 def post(mocker):
+    from aiohttp.test_utils import make_mocked_coro
     resp = mocker.stub()
     resp.status = 200
     mock = mocker.patch('aiohttp.client.ClientSession.post', make_mocked_coro(

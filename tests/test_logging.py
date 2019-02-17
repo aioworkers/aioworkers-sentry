@@ -16,6 +16,6 @@ def config():
 
 
 async def test_logging(context, post, wait_for_call):
-    logging.error(f"error")
+    logging.error("Error message")
 
     await wait_for_call(post)
