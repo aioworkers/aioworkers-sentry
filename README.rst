@@ -30,6 +30,29 @@ Basic config example:
             qsize: 500
 
 
+Or:
+
+.. code-block:: yaml
+
+    logging:
+      version: 1
+      root:
+        handlers: [console,sentry]
+      handlers:
+        console:
+          level: DEBUG
+          class: logging.StreamHandler
+        sentry:
+          dsn: <your sentry dsn>
+          level: ERROR
+          transport:
+            workers: 1
+            qsize: 500
+          environment: production
+          release: 1.0.0
+          tags:
+            env: PROD
+
 
 Development
 -----------
