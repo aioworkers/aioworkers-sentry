@@ -35,7 +35,7 @@ def wait_for_call(loop):
             passed += delay
             if mock.call_count >= count:
                 return
-        assert False, f"Cannot reach call count..."
+        assert False, "Cannot reach call count..."
 
     return do
 
