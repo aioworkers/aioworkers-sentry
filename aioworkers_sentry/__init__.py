@@ -6,4 +6,4 @@ except ImportError:
     __version__ = 'dev'
 
 
-configs = Path(__file__).parent / 'sentry.yaml',
+configs = Path(__file__).parent / 'sentry.ini',
