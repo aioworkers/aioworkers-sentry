@@ -1,6 +1,0 @@
-logging:
-  version: 1
-  handlers:
-    sentry:
-      class: aioworkers_sentry.logging.SentryQueueHandler
-      level: ERROR
