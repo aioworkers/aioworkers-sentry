@@ -1,0 +1,5 @@
+include README.rst
+include aioworkers_sentry/sentry.ini
+
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
