@@ -1,31 +1,45 @@
+import logging
 from functools import partial
 
 from aioworkers.core.base import AbstractEntity
 from raven import Client
-from raven.conf import setup_logging
-from raven.handlers.logging import SentryHandler
 from raven_aiohttp import QueuedAioHttpTransport
+
+from aioworkers_sentry.logging import SentryQueueHandler
 
 
 class Sentry(AbstractEntity):
-    def __init__(self, config=None, *, context=None, loop=None):
-        super().__init__(config, context=context, loop=loop)
-        self.client = Client(
-            config.dsn,
-            transport=partial(
-                QueuedAioHttpTransport,
-                **config.get('transport', {}),
-            )
-        )
-        self.handler = SentryHandler(
-            self.client,
-            **config.get('handler', {})
-        )
-        self.context.on_stop.append(self.on_stop)
-
-    async def on_stop(self):
-        # Stop transport on context stop
-        await self.client.remote.get_transport().close()
+    def __init__(self, config=None, *args, **kwargs):
+        super().__init__(config, *args, **kwargs)
+        self.handler = None
+        self.client = None
+        self.sync_remote = None
+        for h in logging.getLogger().handlers:
+            if isinstance(h, SentryQueueHandler):
+                self.handler = h
+                self.client = h.client
+                self.sync_remote = self.client.remote
 
     async def init(self):
-        setup_logging(self.handler)
+        if self.client is None:
+            return
+        cfg = dict(self.config.new_parent(self.handler.config))
+        cfg.pop('cls', None)
+        cfg.pop('name', None)
+        transport = cfg.pop('transport', {})
+        client = Client(
+            **cfg,
+            transport=partial(
+                QueuedAioHttpTransport,
+                **transport,
+                loop=self.loop,
+            ),
+        )
+        self.client.remote = client.remote
+        self.context.on_cleanup.append(self.cleanup)
+
+    async def cleanup(self):
+        remote = self.client.remote
+        self.client.remote = self.sync_remote
+        # Stop transport on context disconnect
+        await remote.get_transport().close()

@@ -7,7 +7,7 @@ from setuptools import find_packages, setup
 version = __import__('aioworkers_sentry').__version__
 
 requirements = [
-    'aioworkers>=0.12.0',
+    'aioworkers>=0.13',
     'raven',
     'raven-aiohttp',
 ]
