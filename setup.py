@@ -13,6 +13,7 @@ requirements = [
 
 test_requirements = [
     'pytest',
+    'pyyaml',
     'pytest-runner',
     'pytest-mock',
     'pytest-aioworkers',

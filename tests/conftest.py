@@ -3,14 +3,12 @@ from sentry_sdk import Client
 
 
 @pytest.fixture
-def config():
-    from aioworkers.core.config import Config
-    return Config(
-        sentry={
-            'cls': 'aioworkers_sentry.client.Sentry',
-            'dsn': 'https://key@localhost/123',
-        },
-    )
+def config_yaml():
+    return """
+    sentry:
+        cls: aioworkers_sentry.client.Sentry
+        dsn: https://key@localhost/123
+    """
 
 
 @pytest.fixture

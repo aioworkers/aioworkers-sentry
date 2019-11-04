@@ -1,9 +1,8 @@
 from typing import Mapping, Optional
 
-from sentry_sdk import Client, Hub
-
 from aioworkers.core.base import AbstractEntity
 from aioworkers.utils import import_name
+from sentry_sdk import Client, Hub
 
 
 class Sentry(AbstractEntity):
