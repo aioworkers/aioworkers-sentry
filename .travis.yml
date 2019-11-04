@@ -7,9 +7,10 @@ python:
 - 3.7
 install:
 - pip install -U pip setuptools
-- pip install pytest-runner
-script:
-- python setup.py test
+- pip install -U pipenv codecov
+- pip install -e .
+- pipenv install -d --skip-lock --system
+script: pytest --cov=aioworkers_sentry
 before_deploy:
 - echo "__version__ = '$(git describe --tags)'" > aioworkers_sentry/version.py
 deploy:
