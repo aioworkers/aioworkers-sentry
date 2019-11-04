@@ -1,45 +1,54 @@
-import logging
-from functools import partial
+from typing import Mapping, Optional
+
+from sentry_sdk import Client, Hub
 
 from aioworkers.core.base import AbstractEntity
-from raven import Client
-from raven_aiohttp import QueuedAioHttpTransport
-
-from aioworkers_sentry.logging import SentryQueueHandler
+from aioworkers.utils import import_name
 
 
 class Sentry(AbstractEntity):
+    _client_config_keys = frozenset({
+        'dsn', 'release', 'environment',
+        'max_breadcrumbs', 'server_name',
+        'shutdown_timeout',
+        'in_app_include', 'in_app_exclude',
+        'default_integrations', 'dist',
+        'sample_rate',
+        'send_default_pii',
+        'http_proxy',
+        'https_proxy',
+        'ignore_errors',
+        'request_bodies',
+        'debug',
+        'attach_stacktrace',
+        'ca_certs',
+        'propagate_traces',
+        'traces_sample_rate',
+        'traceparent_v2',
+    })
+
     def __init__(self, config=None, *args, **kwargs):
+        self.client = None  # type: Optional[Client]
         super().__init__(config, *args, **kwargs)
-        self.handler = None
-        self.client = None
-        self.sync_remote = None
-        for h in logging.getLogger().handlers:
-            if isinstance(h, SentryQueueHandler):
-                self.handler = h
-                self.client = h.client
-                self.sync_remote = self.client.remote
 
-    async def init(self):
-        if self.client is None:
-            return
-        cfg = dict(self.config.new_parent(self.handler.config))
-        cfg.pop('cls', None)
-        cfg.pop('name', None)
-        transport = cfg.pop('transport', {})
-        client = Client(
-            **cfg,
-            transport=partial(
-                QueuedAioHttpTransport,
-                **transport,
-                loop=self.loop,
-            ),
-        )
-        self.client.remote = client.remote
-        self.context.on_cleanup.append(self.cleanup)
-
-    async def cleanup(self):
-        remote = self.client.remote
-        self.client.remote = self.sync_remote
-        # Stop transport on context disconnect
-        await remote.get_transport().close()
+    def set_config(self, config):
+        super().set_config(config)
+        kwargs = {
+            k: v for k, v in config.items()
+            if k in self._client_config_keys
+        }
+        integrations = []
+        for integr in config.get('integrations', ()):
+            if isinstance(integr, str):
+                params = {}
+                name = integr
+            elif isinstance(integr, Mapping):
+                name, params = next(iter(integr.items()))
+            else:
+                continue
+            factory = import_name(name)
+            integrations.append(factory(**params))
+        if integrations:
+            kwargs.update(integrations=integrations)
+        self.client = Client(**kwargs)
+        Hub.main.bind_client(self.client)

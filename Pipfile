@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 aioworkers = "*"
-raven-aiohttp = "*"
+sentry-sdk = "*"
 
 [dev-packages]
 pytest = "*"

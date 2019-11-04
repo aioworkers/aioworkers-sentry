@@ -8,15 +8,14 @@ version = __import__('aioworkers_sentry').__version__
 
 requirements = [
     'aioworkers>=0.13',
-    'raven',
-    'raven-aiohttp',
+    'sentry_sdk',
 ]
 
 test_requirements = [
     'pytest',
     'pytest-runner',
     'pytest-mock',
-    'pytest-aiohttp',
+    'pytest-aioworkers',
     'pytest-flake8',
     'flake8-isort',
 ]
@@ -27,7 +26,7 @@ readme = pathlib.Path('README.rst').read_text()
 setup(
     name='aioworkers-sentry',
     version=version,
-    description='aioworkers plugin for Sentry ',
+    description='aioworkers plugin for Sentry',
     long_description=readme,
     author='Alexander Bogushov',
     author_email='abogushov@gmail.com',
