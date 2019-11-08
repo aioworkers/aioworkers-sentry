@@ -14,44 +14,23 @@ and setup logging.
 Usage
 -----
 
-Basic config example:
+Install plugin:
+
+.. code-block:: shell
+
+    pip install aioworkers-sentry
+
+
+Add to your config:
 
 .. code-block:: yaml
 
     sentry:
-        cls: aioworkers_sentry.client.Sentry
         dsn: <your sentry dsn>
-        handler:
-            level: ERROR
-            tags:
-                env: PROD
-        transport:
-            workers: 1
-            qsize: 500
-
-
-Or:
-
-.. code-block:: yaml
-
-    logging:
-      version: 1
-      root:
-        handlers: [console,sentry]
-      handlers:
-        console:
-          level: DEBUG
-          class: logging.StreamHandler
-        sentry:
-          dsn: <your sentry dsn>
-          level: ERROR
-          transport:
-            workers: 1
-            qsize: 500
-          environment: production
-          release: 1.0.0
-          tags:
-            env: PROD
+        release: 1.0.0
+        environment: DEV
+        integrations:
+          - sentry_sdk.integrations.aiohttp.AioHttpIntegration
 
 
 Development
@@ -69,4 +48,4 @@ Run tests:
 
 .. code-block:: shell
 
-    pytest
+    pipenv run pytest
