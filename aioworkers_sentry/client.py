@@ -8,6 +8,13 @@ from aioworkers.utils import import_name
 class Sentry(AbstractEntity):
     set_tag = sentry_sdk.set_tag
     set_user = sentry_sdk.set_user
+    set_extra = sentry_sdk.set_extra
+    start_span = sentry_sdk.start_span
+    capture_event = sentry_sdk.capture_event
+    capture_message = sentry_sdk.capture_message
+    capture_exception = sentry_sdk.capture_exception
+    add_breadcrumb = sentry_sdk.add_breadcrumb
+    last_event_id = sentry_sdk.last_event_id
 
     _client_config_keys = frozenset({
         'dsn', 'release', 'environment',
