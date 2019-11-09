@@ -1,11 +1,14 @@
 from typing import Mapping, Optional
 
+import sentry_sdk
 from aioworkers.core.base import AbstractEntity
 from aioworkers.utils import import_name
-from sentry_sdk import Client, Hub
 
 
 class Sentry(AbstractEntity):
+    set_tag = sentry_sdk.set_tag
+    set_user = sentry_sdk.set_user
+
     _client_config_keys = frozenset({
         'dsn', 'release', 'environment',
         'max_breadcrumbs', 'server_name',
@@ -27,7 +30,7 @@ class Sentry(AbstractEntity):
     })
 
     def __init__(self, config=None, *args, **kwargs):
-        self.client = None  # type: Optional[Client]
+        self.client = None  # type: Optional[sentry_sdk.Client]
         super().__init__(config, *args, **kwargs)
 
     def set_config(self, config):
@@ -49,5 +52,5 @@ class Sentry(AbstractEntity):
             integrations.append(factory(**params))
         if integrations:
             kwargs.update(integrations=integrations)
-        self.client = Client(**kwargs)
-        Hub.main.bind_client(self.client)
+        self.client = sentry_sdk.Client(**kwargs)
+        sentry_sdk.Hub.main.bind_client(self.client)
