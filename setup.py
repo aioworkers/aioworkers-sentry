@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import pathlib
+import sys
 
 from setuptools import find_packages, setup
 
@@ -10,6 +11,9 @@ requirements = [
     'aioworkers>=0.13',
     'sentry_sdk',
 ]
+
+if sys.version_info < (3, 7):
+    requirements.append('aiocontextvars')
 
 test_requirements = [
     'pytest',
