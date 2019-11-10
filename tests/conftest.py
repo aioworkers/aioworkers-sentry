@@ -8,6 +8,10 @@ def config_yaml():
     sentry:
         cls: aioworkers_sentry.client.Sentry
         dsn: https://key@localhost/123
+        integrations:
+            - sentry_sdk.integrations.aiohttp.AioHttpIntegration
+            - sentry_sdk.integrations.logging.LoggingIntegration:
+                level: ERROR
     """
 
 
