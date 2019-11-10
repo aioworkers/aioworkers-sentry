@@ -1,7 +1,8 @@
-from typing import Mapping, Optional
+from typing import Any, Dict, Mapping, Optional
 
 import sentry_sdk
 from aioworkers.core.base import AbstractEntity
+from aioworkers.core.config import ValueExtractor
 from aioworkers.utils import import_name
 
 
@@ -36,20 +37,22 @@ class Sentry(AbstractEntity):
         'traceparent_v2',
     })
 
-    def __init__(self, config=None, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.client = None  # type: Optional[sentry_sdk.Client]
-        super().__init__(config, *args, **kwargs)
+        super().__init__(*args, **kwargs)
 
-    def set_config(self, config):
+    def set_config(self, config: ValueExtractor):
         super().set_config(config)
         kwargs = {
             k: v for k, v in config.items()
             if k in self._client_config_keys
         }
+        if not kwargs.get('dsn'):
+            return None
         integrations = []
         for integr in config.get('integrations', ()):
             if isinstance(integr, str):
-                params = {}
+                params = {}  # type: Dict[str, Any]
                 name = integr
             elif isinstance(integr, Mapping):
                 name, params = next(iter(integr.items()))
