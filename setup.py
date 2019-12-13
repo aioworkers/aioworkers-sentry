@@ -9,7 +9,7 @@ version = __import__('aioworkers_sentry').__version__
 
 requirements = [
     'aioworkers>=0.13',
-    'sentry_sdk',
+    'sentry_sdk>=0.13.5',
 ]
 
 if sys.version_info < (3, 7):
