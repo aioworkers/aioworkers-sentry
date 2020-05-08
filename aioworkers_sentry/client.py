@@ -19,6 +19,7 @@ class Sentry(AbstractEntity):
 
     _client_config_keys = frozenset({
         'dsn', 'release', 'environment',
+        'with_locals',
         'max_breadcrumbs', 'server_name',
         'shutdown_timeout',
         'in_app_include', 'in_app_exclude',
