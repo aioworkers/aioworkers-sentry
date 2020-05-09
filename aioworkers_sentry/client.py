@@ -1,9 +1,13 @@
+import multiprocessing
 from typing import Any, Dict, Mapping, Optional
 
-import sentry_sdk
 from aioworkers.core.base import AbstractEntity
 from aioworkers.core.config import ValueExtractor
 from aioworkers.utils import import_name
+
+import sentry_sdk
+
+TAG_PROCESS = 'process'
 
 
 class Sentry(AbstractEntity):
@@ -65,3 +69,12 @@ class Sentry(AbstractEntity):
             kwargs.update(integrations=integrations)
         self.client = sentry_sdk.Client(**kwargs)
         sentry_sdk.Hub.main.bind_client(self.client)
+
+    async def init(self):
+        await super().init()
+        tags = self.config.get('tags')
+        if isinstance(tags, list):
+            if TAG_PROCESS in tags:
+                sentry_sdk.set_tag(
+                    TAG_PROCESS, multiprocessing.current_process().name,
+                )
