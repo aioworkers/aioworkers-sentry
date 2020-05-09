@@ -1,11 +1,10 @@
 import multiprocessing
 from typing import Any, Dict, Mapping, Optional
 
+import sentry_sdk
 from aioworkers.core.base import AbstractEntity
 from aioworkers.core.config import ValueExtractor
 from aioworkers.utils import import_name
-
-import sentry_sdk
 
 TAG_PROCESS = 'process'
 
