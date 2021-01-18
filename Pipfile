@@ -8,7 +8,7 @@ aioworkers = ">=0.18"
 sentry-sdk = ">=0.14.3"
 pytest = "==6.1.2"
 pytest-aioworkers = "==0.3"
-pytest-cov = "==2.10.1"
+pytest-cov = "==2.11.0"
 pytest-mock = "==3.5.0"
 pyyaml = "==5.3.1"
 
