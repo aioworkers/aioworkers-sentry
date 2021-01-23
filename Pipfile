@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 aioworkers = ">=0.18"
 sentry-sdk = ">=0.14.3"
-pytest = "==6.1.2"
+pytest = "==6.2.1"
 pytest-aioworkers = "==0.3"
 pytest-cov = "==2.11.1"
 pytest-mock = "==3.5.1"
