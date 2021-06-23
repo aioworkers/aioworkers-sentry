@@ -14,7 +14,7 @@ pyyaml = "==5.4.1"
 
 [dev-packages]
 isort = "*"
-mypy = "==0.902"
+mypy = "==0.910"
 flake8 = "==3.9.2"
 
 [requires]
