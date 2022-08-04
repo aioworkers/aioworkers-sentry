@@ -15,7 +15,7 @@ pyyaml = "==6.0"
 [dev-packages]
 isort = "*"
 mypy = "==0.961"
-flake8 = "==4.0.1"
+flake8 = "==5.0.4"
 
 [requires]
 python_version = "3.6"
