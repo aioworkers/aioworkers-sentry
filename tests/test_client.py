@@ -13,7 +13,9 @@ async def test_config_exc(context):
     with pytest.raises(ValueError):
         sentry.set_config(
             ValueExtractor(
-                integrations=[1],
+                {
+                    "integrations": [1],
+                }
             )
         )
 
@@ -27,7 +29,9 @@ async def test_config_factory(context):
 
     sentry.set_config(
         ValueExtractor(
-            traces_sampler="tests.test_client.sampler",
+            {
+                "traces_sampler": "tests.test_client.sampler",
+            }
         )
     )
 
