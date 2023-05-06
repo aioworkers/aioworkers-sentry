@@ -48,15 +48,15 @@ jobs:
       - name: isort
         if: ${{ matrix.lint }}
         run: |
-          hatch run style:isort -c aioworkers tests
+          hatch run style:isort -c aioworkers_sentry tests
       - name: ruff
         if: ${{ matrix.lint }}
         run: |
-          hatch run style:ruff check aioworkers tests
+          hatch run style:ruff check aioworkers_sentry tests
       - name: mypy
         if: ${{ matrix.lint }}
         run: |
-          hatch run style:mypy aioworkers tests
+          hatch run style:mypy aioworkers_sentry tests
       - name: Test with pytest & coverage
         run: |
           hatch run cov
