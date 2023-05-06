@@ -8,8 +8,13 @@ def config_yaml():
     sentry:
         cls: aioworkers_sentry.client.Sentry
         dsn: https://key@localhost/123
+        debug: false
+        max_breadcrumbs: 5
+        traces_sample_rate: 0.9
+        tags:
+            - process
         integrations:
-            - sentry_sdk.integrations.aiohttp.AioHttpIntegration
+            - sentry_sdk.integrations.logging.LoggingIntegration
             - sentry_sdk.integrations.logging.LoggingIntegration:
                 level: ERROR
     """
@@ -17,12 +22,12 @@ def config_yaml():
 
 @pytest.fixture
 def catch_sentry(context, mocker):
-    params = {}
+    params: dict = {}
 
     def callback(*args, **kwargs):
         params.update(kwargs, args=args)
 
-    client = context.sentry.client  # type: Client
-    mocker.patch.object(client.transport, 'capture_event', callback)
+    client: Client = context.sentry.client
+    mocker.patch.object(client, "capture_event", callback)
 
     return params
