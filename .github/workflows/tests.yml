@@ -57,14 +57,12 @@ jobs:
         if: ${{ matrix.lint }}
         run: |
           hatch run style:mypy aioworkers_sentry tests
-      - name: Test with pytest & coverage
+      - name: Tests with coverage
         run: |
           hatch run cov
-        continue-on-error: ${{ matrix.continue-on-error }}
       - name: coverage.xml
         if: ${{ matrix.coverage }}
         run: |
-          hatch run coverage report
           hatch run coverage xml
       - name: Upload coverage to Codecov
         if: ${{ matrix.coverage }}

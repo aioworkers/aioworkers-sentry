@@ -53,14 +53,14 @@ include = [
 
 [tool.hatch.envs.default]
 dependencies = [
+    "coverage",
     "pytest",
     "pytest-aioworkers[asyncio]",
-    "pytest-cov",
     "pytest-mock",
     "pyyaml",
 ]
 [tool.hatch.envs.default.scripts]
-cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=aioworkers_sentry --cov=tests --cov-report=html"
+cov = "coverage run -m pytest && coverage report"
 no-cov = "cov --no-cov"
 
 [[tool.hatch.envs.test.matrix]]
@@ -73,7 +73,7 @@ addopts = ["-s", "--doctest-modules"]
 
 [tool.coverage.run]
 branch = false
-parallel = true
+parallel = false
 omit = [
     "aioworkers_sentry/__init__.py",
 ]
