@@ -14,6 +14,10 @@ aioworkers-sentry
   :target: https://pypi.org/project/aioworkers-sentry
   :alt: Python versions
 
+.. image:: https://img.shields.io/badge/%F0%9F%A5%9A-Hatch-4051b5.svg
+   :alt: Hatch project
+   :target: https://github.com/pypa/hatch
+
 
 aioworkers plugin to work with Sentry. Creates Sentry client and handler according configuration
 and setup logging.
@@ -43,16 +47,22 @@ Add to your config:
 Development
 -----------
 
-Install dev requirements:
-
+Format code:
 
 .. code-block:: shell
 
-    pipenv install --dev --skip-lock
+    hatch run style:fmt
 
 
 Run tests:
 
 .. code-block:: shell
 
-    pipenv run pytest
+    hatch run pytest
+
+
+Run tests with coverage:
+
+.. code-block:: shell
+
+    hatch run cov
