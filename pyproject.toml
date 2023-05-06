@@ -38,7 +38,7 @@ dependencies = [
 ]
 [project.optional-dependencies]
 dev-test = [
-    "aioworkers==0.13",
+    "aioworkers==0.20",
     "sentry_sdk==1.22",
     "coverage==7.2.5",
     "pytest==7.0.1",
