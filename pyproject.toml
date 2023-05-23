@@ -47,15 +47,15 @@ dev-test = [
     "pyyaml==6.0",
 ]
 dev-lint = [
-    "isort==5.12.0",
-    "mypy==1.3.0",
-    "black==23.3.0",
     "ruff==0.0.269",
+    "isort==5.12.0",
+    "black==23.3.0",
+    "mypy==1.3.0",
 ]
 
 [project.urls]
 Homepage = "https://github.com/aioworkers/aioworkers-sentry"
-Documentation = "https://github.com/aioworkers/aioworkers-sentry"
+Documentation = "https://github.com/aioworkers/aioworkers-sentry#readme"
 Issues = "https://github.com/aioworkers/aioworkers-sentry/issues"
 Source = "https://github.com/aioworkers/aioworkers-sentry"
 
@@ -73,21 +73,32 @@ features = [
 ]
 [tool.hatch.envs.default.scripts]
 cov = "coverage run -m pytest && coverage report"
-no-cov = "cov --no-cov"
 
-[[tool.hatch.envs.test.matrix]]
-python = ["3.7", "3.8", "3.9", "3.10", "3.11"]
+[[tool.hatch.envs.all.matrix]]
+python = [
+    "3.7",
+    "3.8",
+    "3.9",
+    "3.10",
+    "3.11",
+]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-testpaths = ["tests", "aioworkers_sentry"]
-addopts = ["-s", "--doctest-modules"]
+testpaths = [
+    "aioworkers_sentry",
+    "tests",
+]
+addopts = [
+    "--doctest-modules",
+]
 
 [tool.coverage.run]
 branch = false
 parallel = false
-omit = [
-    "aioworkers_sentry/__init__.py",
+source = [
+    "aioworkers_sentry",
+    "tests",
 ]
 
 [tool.coverage.report]
@@ -99,7 +110,13 @@ exclude_lines = [
 
 [tool.black]
 line-length = 120
-target-version = ["py37", "py38", "py39", "py310", "py311"]
+target-version = [
+    "py37",
+    "py38",
+    "py39",
+    "py310",
+    "py311",
+]
 
 [tool.isort]
 profile = "black"
@@ -118,19 +135,37 @@ check_untyped_defs = true
 [tool.ruff]
 line-length = 100
 
-[tool.hatch.envs.style]
+[tool.hatch.envs.lint]
 features = [
     "dev-lint",
 ]
-[tool.hatch.envs.style.scripts]
-check = [
-    "ruff check aioworkers_sentry tests",
-    "isort --check-only --diff aioworkers_sentry tests",
-    "black --check --diff aioworkers_sentry tests",
-    "mypy aioworkers_sentry tests",
+[tool.hatch.envs.lint.scripts]
+typing = "mypy --install-types --non-interactive {args:aioworkers_sentry tests}"
+style = [
+    "ruff {args:aioworkers_sentry tests}",
+    "isort --check-only --diff {args:aioworkers_sentry tests}",
+    "black --check --diff {args:aioworkers_sentry tests}",
 ]
 fmt = [
-    "isort aioworkers_sentry tests",
-    "black aioworkers_sentry tests",
-    "check",
+    "ruff --fix {args:aioworkers_sentry tests}",
+    "isort {args:aioworkers_sentry tests}",
+    "black {args:aioworkers_sentry tests}",
+    "style",
+]
+all = [
+    "style",
+    "typing",
+]
+
+[tool.hatch.envs.template]
+detached = true
+dependencies = [
+    "scaraplate",
+]
+[tool.hatch.envs.template.scripts]
+update = [
+    "scaraplate rollup --no-input {args:../cookiecutter-aioworkers-plugin} ."
+]
+clone = [
+    "git clone https://github.com/aioworkers/cookiecutter-aioworkers-plugin {args:../cookiecutter-aioworkers-plugin}"
 ]
