@@ -9,19 +9,27 @@ aioworkers-sentry
 
 .. image:: https://codecov.io/gh/aioworkers/aioworkers-sentry/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/aioworkers/aioworkers-sentry
+  :alt: Coverage
 
 .. image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v0.json
   :target: https://github.com/charliermarsh/ruff
+  :alt: Code style: ruff
+
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+  :target: https://github.com/psf/black
+  :alt: Code style: black
 
 .. image:: https://img.shields.io/badge/types-Mypy-blue.svg
   :target: https://github.com/python/mypy
+  :alt: Code style: Mypy
 
 .. image:: https://readthedocs.org/projects/aioworkers-sentry/badge/?version=latest
-  :target: https://aioworkers-sentry.readthedocs.io/en/latest/?badge=latest
+  :target: https://github.com/aioworkers/aioworkers-sentry#readme
   :alt: Documentation Status
 
 .. image:: https://img.shields.io/pypi/pyversions/aioworkers-sentry.svg
   :target: https://pypi.org/project/aioworkers-sentry
+  :alt: Python versions
 
 .. image:: https://img.shields.io/pypi/dm/aioworkers-sentry.svg
   :target: https://pypi.org/project/aioworkers-sentry

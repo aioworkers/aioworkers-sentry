@@ -40,7 +40,7 @@ dependencies = [
 dev-test = [
     "aioworkers==0.26",
     "sentry-sdk==1.29.2",
-    "coverage==7.2.7",
+    "coverage[toml]==7.2.7",
     "pytest==7.4.0",
     "pytest-aioworkers[asyncio]==0.4",
     "pytest-mock==3.11.1",
@@ -65,7 +65,7 @@ Source = "https://github.com/aioworkers/aioworkers-sentry"
 [tool.hatch.version]
 path = "aioworkers_sentry/__init__.py"
 
-[tool.hatch.build.targets.sdist]
+[tool.hatch.build]
 include = [
     "/aioworkers_sentry",
 ]
@@ -75,7 +75,10 @@ features = [
     "dev-test",
 ]
 [tool.hatch.envs.default.scripts]
-cov = "coverage run -m pytest && coverage report"
+cov = [
+    "coverage run -m pytest",
+    "coverage report",
+]
 
 [[tool.hatch.envs.all.matrix]]
 python = [
@@ -125,7 +128,6 @@ target-version = [
 profile = "black"
 multi_line_output = 3
 force_single_line = false
-import_heading_localfolder = true
 include_trailing_comma = true
 
 [tool.mypy]
@@ -136,9 +138,10 @@ ignore_missing_imports = true
 check_untyped_defs = true
 
 [tool.ruff]
-line-length = 100
+line-length = 120
 
 [tool.hatch.envs.lint]
+python = "3.8"
 features = [
     "dev-lint",
 ]
