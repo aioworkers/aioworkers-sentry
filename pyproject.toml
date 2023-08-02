@@ -53,6 +53,9 @@ dev-lint = [
     "mypy==1.4.1",
 ]
 
+[project.entry-points.aioworkers]
+sentry = "aioworkers_sentry"
+
 [project.urls]
 Homepage = "https://github.com/aioworkers/aioworkers-sentry"
 Documentation = "https://github.com/aioworkers/aioworkers-sentry#readme"
