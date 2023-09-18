@@ -37,7 +37,9 @@ class Sentry(AbstractEntity):
             "release",
             "request_bodies",
             "server_name",
-            "traceparent_v2",
+            "trace_propagation_targets",
+            "profiler_mode",
+            "functions_to_trace",
         }
     )
     _client_config_bool = frozenset(
@@ -68,9 +70,14 @@ class Sentry(AbstractEntity):
             "traces_sample_rate",
         }
     )
-    _client_config_factory = frozenset(
+    _client_config_object = frozenset(
         {
             "traces_sampler",
+            "profiles_sampler",
+            "event_scrubber",
+            "before_send_transaction",
+            "before_breadcrumb",
+            "before_send",
         }
     )
 
@@ -89,7 +96,7 @@ class Sentry(AbstractEntity):
                 kwargs[k] = self.config.get_int(k)
             elif k in self._client_config_float:
                 kwargs[k] = self.config.get_float(k)
-            elif k in self._client_config_factory:
+            elif k in self._client_config_object:
                 kwargs[k] = import_name(self.config.get(k))
             elif k in self._client_config_keys:
                 kwargs[k] = self.config.get(k)
