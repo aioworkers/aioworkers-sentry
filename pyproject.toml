@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "aioworkers plugin for Sentry"
 readme = "README.rst"
 license = "Apache-2.0"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 authors = [
     { name = "Alexander Bogushov", email = "abogushov@gmail.com" },
     { name = "Alexander Malev", email = "malev@somedev.ru" },
@@ -24,11 +24,11 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
@@ -82,11 +82,11 @@ cov = [
 
 [[tool.hatch.envs.all.matrix]]
 python = [
-    "3.7",
     "3.8",
     "3.9",
     "3.10",
     "3.11",
+    "3.12",
 ]
 
 [tool.pytest.ini_options]
@@ -117,11 +117,11 @@ exclude_lines = [
 [tool.black]
 line-length = 120
 target-version = [
-    "py37",
     "py38",
     "py39",
     "py310",
     "py311",
+    "py312",
 ]
 
 [tool.isort]
